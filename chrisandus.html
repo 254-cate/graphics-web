@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Injusi Graphics | Portfolio</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color:blue;
+            background-color:brown;
+        }
+        header {
+            background: linear-gradient(135deg, #4ed1ff 0%, #ff7eb3 50%, #9b51e0 100%);
+            color: black;
+            padding: 2.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(224, 81, 81, 0.032);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+        }
+        header p {
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+        }
+        nav {
+            margin-top: 1.5rem;
+        }
+        nav a {
+            color: brown;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            transition: color 0.3s ease;
+        }
+        nav a:hover {
+            color: red;
+            text-decoration: underline;
+        }
+        
+        /* Hero Section for Main Banner Image */
+        .hero-container {
+            width: 100%;
+            background-color: brown;
+            padding: 2rem 2rem 0 2rem;
+            text-align: left;
+            box-shadow: none;
+        }
+        .hero-image {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center top;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+            border: 3px solid #ff7eb3; 
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+            padding: 3rem 0;
+        }
+        .section-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: #512da8;
+            position: relative;
+        }
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, #4ed1ff, #ff7eb3);
+            margin: 8px auto 0 auto;
+            border-radius: 2px;
+        }
+        .portfolio-grid {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+        .portfolio-item {
+            background: pink;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            width: 30%;
+            text-align: center;
+            transition: transform 0.3s ease;
+            border-top: 8px solid #9b51e0;
+            border: 4px solid #ffebef;
+        }
+        .portfolio-item:nth-child(2) {
+            border-top: 8px solid #ff7eb3;
+        }
+        .portfolio-item:nth-child(3) {
+            border-top: 8px solid #4ed1ff;
+        }
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Portfolio Image Containers */
+        .portfolio-img-container {
+            position: relative;
+            width: 100%;
+            height: 180px; 
+            overflow: hidden;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            background-color: brown; 
+            cursor: pointer; /* Changes mouse cursor to a hand */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 6px solid #fff;
+        }
+        
+        .portfolio-img {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            object-fit: cover; 
+            transition: transform 0.5s ease;
+            border: 2px solid #fff;
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(155, 81, 224, 0.85); 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .overlay-text {
+            color:whitesmoke;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 2px solid white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .portfolio-item:hover .portfolio-img {
+            transform: scale(1.1); 
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1; 
+        }
+
+        /* ========================================== */
+        /* STYLING FOR THE LIGHTBOX POP-UP WINDOW     */
+        /* ========================================== */
+        .lightbox-modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 9999; /* Sits completely on top of everything */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(26, 8, 38, 0.95); /* Deep dark purple overlay */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox-content {
+            max-width: 85%;
+            max-height: 85vh;
+            border-radius: 8px;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
+            animation: zoomIn 0.3s ease;
+        }
+
+        /* Close Button (X) */
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .lightbox-close:hover {
+            color: #ff7eb3;
+        }
+
+        /* Quick zoom-in animation when pop-up opens */
+        @keyframes zoomIn {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        /* ========================================== */
+        
+        .contact-section {
+            text-align: center;
+            padding: 3rem 2rem;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            margin-top: 4rem;
+            border: 1px solid #f0e6ff;
+        }
+        .contact-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 28px;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 100px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            position: relative;
+        }
+        .email-btn {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: 2px solid #ddd;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        .email-btn:hover {
+            background-color: #f0f0f0;
+            color: #111;
+            transform: translateY(-3px);
+        }
+        .whatsapp-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+            color: white;
+            transform: translateY(-7px);
+        }
+        /* Facebook Button Specific Style - Official Brand Blue */
+        .facebook-btn {
+            background-color: #1877F2;
+            box-shadow: 0 4px 15px rgba(24, 119, 242, 0.4);
+        }
+        .facebook-btn:hover {
+            background-color: #166FE5;
+            box-shadow: 0 6px 20px rgba(22, 111, 229, 0.6);
+        }
+        footer {
+            background: linear-gradient(135deg, #9b51e0 0%, #ff7eb3 100%);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Injusi Graphics</h1>
+        <p>Where ideas meet creativity, skills and professionalism</p>
+        <nav>
+            <a href="#portfolio">Portfolio</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+        </nav>
+    </header>
+
+    <div class="hero-container">
+        <img class="hero-image" src="WhatsApp Image 2026-05-19 at 1.16.22 PM.jpeg" alt="Hero Image">
+    </div>
+
+    <div class="container">
+        <section id="portfolio">
+            <h2 class="section-title">Featured Work</h2>
+            <div class="portfolio-grid">
+                
+                <div class="portfolio-item">
+                    <div class="portfolio-img-container" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="WhatsApp Image 2026-05-20 at 8.12.42 PM.jpeg">
+                        <div class="portfolio-overlay">
+                            <span class="overlay-text">View Project</span>
+                        </div>
+                    </div>
+                    <h3>Logo Design</h3>
+                    <p>Custom, high-impact brand identities built from scratch.</p>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-img-container" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="WhatsApp Image 2026-05-20 at 8.12.41 PM.jpeg">
+                        <div class="portfolio-overlay">
+                            <span class="overlay-text">View Project</span>
+                        </div>
+                    </div>
+                    <h3>Church & Event Flyers</h3>
+                    <p>Vibrant, detailed promotional materials that grab attention.</p>
+                </div>
+
+                <div class="portfolio-item">
+                    <div class="portfolio-img-container" onclick="openLightbox(this.querySelector('img').src)">
+                        <img src="WhatsApp Image 2026-05-20 at 8.12.41 PM (1).jpeg">
+                        <div class="portfolio-overlay">
+                            <span class="overlay-text">View Project</span>
+                        </div>
+                    </div>
+                    <h3>Business Banners</h3>
+                    <p>Professional large-scale prints and organizational banners.</p>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="about" style="margin-top: 4rem;">
+            <h2 class="section-title">About the Designer</h2>
+            <p style="text-align: center; max-width: 650px; margin: auto; line-height: 1.8; color: black;">
+                Injusi Graphics is a creative graphic design brand focused on delivering modern, eye-catching, and professional designs for businesses, brands, events, and individuals.
+
+We specialize in:
+
+Banner design
+Posters & flyers
+Business branding
+Social media graphics
+Logo design
+Printing layouts
+Custom creative designs
+
+Our goal is to help clients stand out through quality visuals, fast turnaround, and affordable design services.
+
+At Injusi Graphics, every project is handled with creativity, attention to detail, and dedication to customer satisfaction. Whether you need a simple poster or full brand identity, we work to bring your ideas to life professionally.
+            </p>
+        </section>
+
+        <section id="contact" class="contact-section">
+            <h2 class="section-title">Start a Project</h2>
+            <p style="margin-bottom: 1rem; color: #555;">Have a design project in mind? Reach out directly via WhatsApp or email, and let's bring your vision to life.</p>
+            <p style="margin-bottom: 2rem; color: #555;">Email: <a href="mailto:injusigraphics@gmail.com" style="color:#0066cc; text-decoration: underline;">injusigraphics@gmail.com</a></p>
+            
+            <div class="contact-buttons-container">
+                <a href="https://wa.me/254116827348?text=Hello%20Injusi%20Graphics!%20I%20would%20like%20to%20inquire%20about%20your%20design%20services." 
+                   class="contact-btn whatsapp-btn" 
+                   target="_blank" 
+                   rel="noopener noreferrer">
+                    <img src="https://img.magnific.com/premium-photo/round-whatsapp-logo-isolated-white-background_469489-1039.jpg?semt=ais_hybrid&w=740&q=80" alt="WhatsApp" class="whatsapp-icon">
+                    Chat on WhatsApp
+                </a>
+
+                <a href="https://www.facebook.com/profile.php?id=61589226194209" 
+                   class="contact-btn facebook-btn" 
+                   target="_blank" 
+                   rel="noopener noreferrer">
+                    Find Us on Facebook
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <div id="customLightbox" class="lightbox-modal" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightboxImg" class="lightbox-content" src="WhatsApp Image 2026-05-20 at 8.12.41 PM (1).jpeg" alt="Enlarged Portfolio View" onclick="event.stopPropagation()">
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Injusi Graphics. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function openLightbox(imageSrc) {
+            const lightbox = document.getElementById('customLightbox');
+            const lightboxImg = document.getElementById('lightboxImg');
+            
+            lightboxImg.src = imageSrc;
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('customLightbox');
+            lightbox.style.display = 'none';
+        }
+
+        // Close lightbox when hitting the Escape key on your keyboard
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") {
+                closeLightbox();
+            }
+        });
+    </script>
+
+</body>
+</html>
